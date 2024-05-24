@@ -1,25 +1,34 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
+import dotenv from "dotenv";
+import userRoutes from "./routes/users.js";
+import jobRoutes from "./routes/jobs.js";
+
+dotenv.config();
+
+console.log("MONGO_URI FROM .ENV", process.env.MONGO_URI);
+
 const app = express();
-require("dotenv").config();
 
 app.use(cors());
 app.use(express.json());
 
+const mongoUri = process.env.MONGO_URI;
+const port = process.env.PORT || 5000;
+
 mongoose
-  .connect(process.env.MONGO_URI, {
-    userNewUrlParser: true,
-    UseUnifiedTopology: true,
+  .connect(mongoUri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
   })
   .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.log(err));
+  .catch((err) => console.log("MongoDB connection error ", err));
 
-const user = require("./models/user");
-const job = require("./models/Job");
+app.use("/api/users", userRoutes);
+app.use("/api/jobs", jobRoutes);
 
-app.use("/api/users", require("./routes/users"));
-app.use("/api/jobs", require("./routes/jobs"));
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${port}`));
 
-const PORT = process.env.port || 5000;
-app.listen(PORT, () => console.log(`server runnig on port ${PORT}`));
+console.log("Mongo URI:", process.env.MONGO_URI);

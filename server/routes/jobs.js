@@ -1,6 +1,7 @@
-const express = require("express");
+import express from "express";
+import Job from "../models/job.js";
+
 const router = express.Router();
-const Job = require("../models/Job");
 
 router.post("/", async (req, res) => {
   const { title, company, location, description, postedBy } = req.body;
@@ -13,3 +14,5 @@ router.get("/", async (req, res) => {
   const jobs = await Job.find().populate("postedBy", "name");
   res.json(jobs);
 });
+
+export default router;
