@@ -7,13 +7,11 @@ import Register from "./components/Register";
 const App = () => {
   return (
     <Router>
-      <div>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/jobs" element={<JobList />} />
-          <Route path="/register" element={<Register />} />
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/jobs" element={<JobList />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
     </Router>
   );
 };

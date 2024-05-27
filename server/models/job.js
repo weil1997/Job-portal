@@ -1,11 +1,15 @@
 import mongoose from "mongoose";
 
 const jobSchema = new mongoose.Schema({
-  title: String,
-  company: String,
-  location: String,
-  description: String,
-  postedBy: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+  title: { type: String, required: true },
+  company: { type: String, required: true },
+  location: { type: String, required: true },
+  description: { type: String, required: true },
+  postedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
 });
 
 export default mongoose.model("Job", jobSchema);
